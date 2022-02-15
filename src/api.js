@@ -26,16 +26,16 @@ export async function getUserFragments(user) {
     console.error("Unable to call GET /v1/fragment", { err });
   }
 }
-export async function createFragment(user,fragmentData) {
+export async function createFragment(user, fragmentData) {
   console.log("Start creating fragment");
   console.log("data", fragmentData);
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         // Include the user's ID Token in the request so we're authorized
         Authorization: `Bearer ${user.idToken}`,
-        'Content-Type': `text/plain`
+        "Content-Type": `text/plain`,
       },
       body: fragmentData,
     });

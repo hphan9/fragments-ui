@@ -7,7 +7,7 @@
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html",
     "prettier": "npx prettier --write .",
-    "lint":"npx eslint src/*"
+    "lint": "npx eslint src/*"
   },
   "repository": {
     "type": "git",

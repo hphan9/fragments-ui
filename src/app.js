@@ -1,17 +1,17 @@
 // src/app.js
 
-import { Auth, getUser } from './auth';
-import {getUserFragments} from './api';
-import {createFragment} from './api';
+import { Auth, getUser } from "./auth";
+import { getUserFragments } from "./api";
+import { createFragment } from "./api";
 async function init() {
   // Get our UI elements
-  const userSection = document.querySelector('#user');
-  const loginBtn = document.querySelector('#login');
-  const logoutBtn = document.querySelector('#logout');
-  const fragmentForm= document.querySelector('#fragmentForm');
-  const formSection= document.querySelector('#form');
-  const inputData= document.querySelector("#fragmentData");
-  const formsubmitBtn= document.querySelector("#formButton")
+  const userSection = document.querySelector("#user");
+  const loginBtn = document.querySelector("#login");
+  const logoutBtn = document.querySelector("#logout");
+  const fragmentForm = document.querySelector("#fragmentForm");
+  const formSection = document.querySelector("#form");
+  const inputData = document.querySelector("#fragmentData");
+  const formsubmitBtn = document.querySelector("#formButton");
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
     // Sign-in via the Amazon Cognito Hosted UI (requires redirects), see:
@@ -41,19 +41,19 @@ async function init() {
   userSection.hidden = false;
 
   // Show the user's username
-  userSection.querySelector('.username').innerText = user.username;
-  
-  formSection.hidden=false;
+  userSection.querySelector(".username").innerText = user.username;
+
+  formSection.hidden = false;
   // Disable the Login button
   loginBtn.disabled = true;
-  fragmentForm.onsubmit =(event)=>{
-    event.preventDefault()
+  fragmentForm.onsubmit = (event) => {
+    event.preventDefault();
     console.log("Form Submit");
     console.log(event.target.fdata.value);
-    const data = event.target.fdata.value
-    createFragment(user,data);
-  }
+    const data = event.target.fdata.value;
+    createFragment(user, data);
+  };
 }
 
 // Wait for the DOM to be ready, then start the app
-addEventListener('DOMContentLoaded', init);
+addEventListener("DOMContentLoaded", init);
