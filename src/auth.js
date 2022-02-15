@@ -1,12 +1,12 @@
 // src/auth.js
 
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth } from "aws-amplify";
 
 // Configure our Auth object to use our Cognito User Pool
 Amplify.configure({
   Auth: {
     // Amazon Region
-    region: 'us-east-1',
+    region: "us-east-1",
 
     // Amazon Cognito User Pool ID
     userPoolId: process.env.AWS_COGNITO_POOL_ID,
@@ -20,7 +20,7 @@ Amplify.configure({
       domain: process.env.AWS_COGNITO_HOSTED_UI_DOMAIN,
 
       // These scopes must match what you set in the User Pool for this App Client
-      scope: ['email', 'profile', 'openid'],
+      scope: ["email", "profile", "openid"],
 
       // NOTE: these must match what you have specified in the Hosted UI
       // app settings for Callback and Redirect URLs (e.g., no trailing slash).
@@ -28,7 +28,7 @@ Amplify.configure({
       redirectSignOut: process.env.OAUTH_SIGN_OUT_REDIRECT_URL,
 
       // We're using the Access Code Grant flow (i.e., `code`)
-      responseType: 'code',
+      responseType: "code",
     },
   },
 });
@@ -44,7 +44,7 @@ async function getUser() {
     const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
 
     // If that didn't throw, we have a user object, and the user is authenticated
-    console.log('The user is authenticated');
+    console.log("The user is authenticated");
 
     // Get the user's username
     const username = currentAuthenticatedUser.username;
@@ -53,7 +53,8 @@ async function getUser() {
     // microservce. See discussion of various tokens:
     // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
     const idToken = currentAuthenticatedUser.signInUserSession.idToken.jwtToken;
-    const accessToken = currentAuthenticatedUser.signInUserSession.accessToken.jwtToken;
+    const accessToken =
+      currentAuthenticatedUser.signInUserSession.accessToken.jwtToken;
 
     // Return a simplified "user" object
     return {
