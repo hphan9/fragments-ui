@@ -1,8 +1,19 @@
 // src/app.js
 
 import { Auth, getUser } from "./auth";
-import { getUserFragments } from "./api";
-import { createFragment } from "./api";
+import { createFragment, getUserFragments, getFragmentData } from "./api";
+import { ConsoleLogger } from "@aws-amplify/core";
+
+function createFragmentList(user, fragments) {
+  var list = document.createElement("ul");
+  fragments.forEach(async (d) => {
+    let li = document.createElement("li");
+    li.innerHTML = `Id: ${d.id}, Created: ${d.created}`;
+    list.append(li);
+  });
+  return list;
+}
+
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector("#user");
@@ -10,8 +21,8 @@ async function init() {
   const logoutBtn = document.querySelector("#logout");
   const fragmentForm = document.querySelector("#fragmentForm");
   const formSection = document.querySelector("#form");
-  const inputData = document.querySelector("#fragmentData");
-  const formsubmitBtn = document.querySelector("#formButton");
+  const listFragment = document.querySelector("#listFragment");
+
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
     // Sign-in via the Amazon Cognito Hosted UI (requires redirects), see:
@@ -32,28 +43,38 @@ async function init() {
     return;
   }
   // Do an authenticated request to the fragments API server and log the result
-  getUserFragments(user);
+  let responseGetUserFragments = await getUserFragments(user);
 
   // Log the user info for debugging purposes
   console.log({ user });
 
   // Update the UI to welcome the user
   userSection.hidden = false;
-
+  listFragment.hidden = false;
+  formSection.hidden = false;
   // Show the user's username
   userSection.querySelector(".username").innerText = user.username;
 
-  formSection.hidden = false;
+  //Show the user's fragment
+  if (responseGetUserFragments.status == "ok") {
+    const fragments = responseGetUserFragments.fragments;
+    if (fragments.length > 0) {
+      const ul = createFragmentList(user, fragments);
+      listFragment.append(ul);
+    }
+  } else {
+    listFragment.innerHTML = "<p>Error loading Fragments data for user</p>";
+  }
+
   // Disable the Login button
   loginBtn.disabled = true;
   fragmentForm.onsubmit = (event) => {
     event.preventDefault();
     console.log("Form Submit");
-    console.log(event.target.fdata.value);
     const data = event.target.fdata.value;
     createFragment(user, data);
   };
 }
 
-// Wait for the DOM to be ready, then start the app
+// Wait for the DOM to be ready, then start the appyu
 addEventListener("DOMContentLoaded", init);
