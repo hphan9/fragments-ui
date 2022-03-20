@@ -71,10 +71,13 @@ async function init() {
   fragmentForm.onsubmit = (event) => {
     event.preventDefault();
     console.log("Form Submit");
-    const data = event.target.fdata.value;
-    createFragment(user, data);
+    const contentType = event.target.fragmentType.value;
+    const data = event.target.fragmentFile.files[0];
+    console.log(contentType);
+    console.log(data);
+    createFragment(user, data, contentType);
   };
 }
 
-// Wait for the DOM to be ready, then start the appyu
+// Wait for the DOM to be ready, then start the app
 addEventListener("DOMContentLoaded", init);

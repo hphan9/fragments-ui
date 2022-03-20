@@ -24,8 +24,53 @@
     <section hidden id="form">
       <h2>Create new Fragment</h2>
       <form action="" method="post" id="fragmentForm">
-        <input name="fdata" id="fdata" type="text" />
-        <input type="submit" value="submit" />
+        <div>
+          <label><input
+              type="radio"
+              name="fragmentType"
+              value="text/plain"
+              required
+            />
+            Text/plain</label
+          ><br />
+          <label
+            ><input
+              type="radio"
+              name="fragmentType"
+              value="text/markdown"
+              required
+            />
+            Text/markdown</label
+          ><br />
+          <label
+            ><input
+              type="radio"
+              name="fragmentType"
+              value="text/html"
+              required
+            />
+            Text/html</label
+          ><br />
+          <label
+            ><input
+              type="radio"
+              name="fragmentType"
+              value="application/json"
+              required
+            />
+            application/json</label
+          ><br />
+        </div>
+        <div>
+          <input
+            type="file"
+            id="input-file"
+            accept="text/plain,text/markdown,text/html, application/json"
+            name="fragmentFile"
+            required
+          />
+        </div>
+        <input type="submit" value="Submit" />
       </form>
     </section>
   </body>
