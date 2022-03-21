@@ -1,23 +1,25 @@
 // src/app.js
 
 import { Auth, getUser } from "./auth";
-import { createFragment, getUserFragments} from "./api";
+import { createFragment, getUserFragments } from "./api";
 import { ConsoleLogger } from "@aws-amplify/core";
 
-function createFragmentList( fragments) {
+function createFragmentList(fragments) {
   var list = document.createElement("ol");
   fragments.forEach(async (d) => {
     let li = document.createElement("li");
-    li.innerHTML = `Id: ${d.id}  <br/>  Created: ${new Date(d.created).toDateString()} <br/> Type: ${d.type} `;
+    li.innerHTML = `Id: ${d.id}  <br/>  Created: ${new Date(
+      d.created
+    ).toDateString()} <br/> Type: ${d.type} `;
     list.append(li);
   });
   return list;
 }
 
-async function displayUserFragmentList(user, listFragment){
+async function displayUserFragmentList(user, listFragment) {
   let responseGetUserFragments = await getUserFragments(user);
-  var listFragmentDiv= listFragment.querySelector("div");
-  listFragmentDiv.innerHTML="";
+  var listFragmentDiv = listFragment.querySelector("div");
+  listFragmentDiv.innerHTML = "";
   if (responseGetUserFragments.status == "ok") {
     const fragments = responseGetUserFragments.fragments;
     if (fragments.length > 0) {
@@ -57,7 +59,7 @@ async function init() {
     logoutBtn.disabled = true;
     return;
   }
- 
+
   // Log the user info for debugging purposes
   console.log({ user });
 

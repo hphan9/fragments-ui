@@ -1,0 +1,15 @@
+# ignore the dependencies
+node_modules/
+
+#ignore the dist and cache directories
+dist/
+.parcel-cache/
+
+#ignore git, vs codes, md file
+.git/
+.github/
+.vscode/
+.eslintrc.js
+.git*
+*.md
+
