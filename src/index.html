@@ -2,10 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Fragments UI</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
     <link rel="stylesheet" href="index.css" />
     <script type="module" src="./app.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <h1>Fragments UI</h1>
@@ -20,58 +42,45 @@
     <section hidden id="listFragment">
       <h2>List of Fragment</h2>
       <div></div>
+      <table class="table table-responsive-lg">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Data</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </section>
     <section hidden id="form">
       <h2>Create new Fragment</h2>
       <form action="" method="post" id="fragmentForm">
-        <div>
-          <label
-            ><input
-              type="radio"
-              name="fragmentType"
-              value="text/plain"
-              required
-            />
-            Text/plain</label
-          ><br />
-          <label
-            ><input
-              type="radio"
-              name="fragmentType"
-              value="text/markdown"
-              required
-            />
-            Text/markdown</label
-          ><br />
-          <label
-            ><input
-              type="radio"
-              name="fragmentType"
-              value="text/html"
-              required
-            />
-            Text/html</label
-          ><br />
-          <label
-            ><input
-              type="radio"
-              name="fragmentType"
-              value="application/json"
-              required
-            />
-            application/json</label
-          ><br />
+        <div class="form-group">
+          <label for="fragmentType">Fragment type</label>
+          <select class="custom-select mr-sm-2" id="fragmentType">
+            <option value="text/plain">text/plain</option>
+            <option value="text/markdown">text/markdown</option>
+            <option value="text/html">text/html</option>
+            <option value="application/json">application/json</option>
+            <option value="image/jpeg">image/jpeg</option>
+            <option value="image/png">image/png</option>
+            <option value="image/gif">image/gif</option>
+            <option value="image/webp">image/webp</option>
+          </select>
         </div>
-        <div>
+        <div class="form-group">
           <input
             type="file"
             id="input-file"
-            accept="text/plain,text/markdown,text/html, application/json"
+            accept=" text/markdown, .md, text/plain,text/html, application/json"
             name="fragmentFile"
             required
           />
         </div>
-        <input type="submit" value="Submit" />
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </section>
   </body>

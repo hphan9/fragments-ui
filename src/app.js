@@ -1,33 +1,60 @@
 // src/app.js
 
 import { Auth, getUser } from "./auth";
-import { createFragment, getUserFragments } from "./api";
+import {
+  createFragment,
+  getUserFragments,
+  getFragment,
+  deleteFragment,
+  updateFragment,
+} from "./api";
 import { ConsoleLogger } from "@aws-amplify/core";
 
-function createFragmentList(fragments) {
-  var list = document.createElement("ol");
+async function showData(user, id) {
+  const data = await getFragment(user, id);
+  return data;
+}
+async function createFragmentList(user, tbodyFragments, fragments) {
+  let count = 1;
   fragments.forEach(async (d) => {
-    let li = document.createElement("li");
-    li.innerHTML = `Id: ${d.id}  <br/>  Created: ${new Date(
-      d.created
-    ).toDateString()} <br/> Type: ${d.type} `;
-    list.append(li);
+    let row = document.createElement("tr");
+    let number = document.createElement("th");
+    number.innerHTML = count++;
+    number.scope = "row";
+    let colID = document.createElement("td");
+    let colData = document.createElement("td");
+    let colUpdate = document.createElement("td");
+    let colDelete = document.createElement("td");
+    colID.innerHTML = d.id;
+    colData.innerHTML = await showData(user, d.id);
+    let updateButton = document.createElement("button");
+    updateButton.innerHTML = "Update";
+    let deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Delete";
+    deleteButton.onclick = async () => {
+      await deleteFragment(user, d.id);
+      alert("Delete Fragment");
+      window.location.reload();
+    };
+    colUpdate.append(updateButton);
+    colDelete.append(deleteButton);
+    row.append(number, colID, colData, colUpdate, colDelete);
+    tbodyFragments.append(row);
   });
-  return list;
 }
 
 async function displayUserFragmentList(user, listFragment) {
   let responseGetUserFragments = await getUserFragments(user);
-  var listFragmentDiv = listFragment.querySelector("div");
-  listFragmentDiv.innerHTML = "";
+  var listFragmentTable = listFragment.querySelector("tbody");
+  listFragmentTable.innerHTML = "";
   if (responseGetUserFragments.status == "ok") {
     const fragments = responseGetUserFragments.fragments;
     if (fragments.length > 0) {
-      const ul = createFragmentList(fragments);
-      listFragmentDiv.append(ul);
+      await createFragmentList(user, listFragmentTable, fragments);
     }
   } else {
-    listFragmentDiv.innerHTML = "<p>Error loading Fragments data for user</p>";
+    listFragmentTable.innerHTML =
+      "<p>Error loading Fragments data for user</p>";
   }
 }
 
@@ -39,7 +66,6 @@ async function init() {
   const fragmentForm = document.querySelector("#fragmentForm");
   const formSection = document.querySelector("#form");
   const listFragment = document.querySelector("#listFragment");
-
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
     // Sign-in via the Amazon Cognito Hosted UI (requires redirects), see:
@@ -75,6 +101,8 @@ async function init() {
 
   // Disable the Login button
   loginBtn.disabled = true;
+
+  //submit form
   fragmentForm.onsubmit = async (event) => {
     event.preventDefault();
     console.log("Form Submit");
@@ -84,7 +112,7 @@ async function init() {
     console.log(data);
     await createFragment(user, data, contentType);
     fragmentForm.reset();
-    await displayUserFragmentList(user, listFragment);
+    window.location.reload();
   };
 }
 
