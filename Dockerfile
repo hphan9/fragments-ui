@@ -34,7 +34,7 @@ COPY ./.env ./
 RUN npm run build
 
 # Start with nginx on Debian
-FROM nginx:stable As production
+FROM nginx:stable-alpine As production
 
 # Use /usr/local/src/fragments-ui as our working directory
 WORKDIR /usr/local/src/fragments-ui

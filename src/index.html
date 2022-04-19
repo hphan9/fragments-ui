@@ -40,22 +40,67 @@
       <h2>Hello <span class="username"></span>!</h2>
     </section>
     <section hidden id="listFragment">
-      <h2>List of Fragment</h2>
+      <h2>Fragment List</h2>
       <div></div>
       <table class="table table-responsive-lg">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">ID</th>
-            <th scope="col">Data</th>
-            <th scope="col">Update</th>
+            <th scope="col">Updated</th>
+            <th scope="col">Type</th>
+            <th scope="col">Size</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
     </section>
-    <section hidden id="form">
+    <section hidden id="viewFormSection">
+      <h2>View Fragment Data</h2>
+      <form action="" method="post" id="viewForm">
+        <div class="form-group">
+          <label for="fragmentId">Fragment Id</label>
+          <select class="custom-select mr-sm-2" id="fragmentId"></select>
+        </div>
+        <div class="form-group">
+          <label for="extension">Extension</label>
+          <select class="custom-select mr-sm-2" id="extension">
+            <option value="">Default</option>
+            <option value=".txt">.txt</option>
+            <option value=".md">md</option>
+            <option value=".json">json</option>
+            <option value=".html">html</option>
+            <option value=".png">png</option>
+            <option value=".jpg">jpg</option>
+            <option value=".webp">webp</option>
+            <option value=".gif">gif</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div id="fragmentData" hidden class="d-block p-4"></div>
+    </section>
+    <section hidden id="updateFormSection">
+      <h2>Update Fragment</h2>
+      <form action="" method="post" id="updateForm">
+        <div class="form-group">
+          <label for="fragmentId">Fragment Id</label>
+          <select class="custom-select mr-sm-2" id="fragmentId"></select>
+        </div>
+        <div class="form-group">
+          <input
+            type="file"
+            id="input-file"
+            accept=" text/markdown, .md, text/plain,text/html, application/json, .jpg, .png, .webp, .gif"
+            name="fragmentFile"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </section>
+    <section hidden id="createForm">
       <h2>Create new Fragment</h2>
       <form action="" method="post" id="fragmentForm">
         <div class="form-group">
@@ -75,7 +120,7 @@
           <input
             type="file"
             id="input-file"
-            accept=" text/markdown, .md, text/plain,text/html, application/json"
+            accept=" text/markdown, .md, text/plain,text/html, application/json, .jpeg,.png, .webp, .gif"
             name="fragmentFile"
             required
           />

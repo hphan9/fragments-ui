@@ -45,11 +45,8 @@ export async function getFragment(user, id) {
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
-    //return buffer //text
-    console.log(res.headers.get("Content-Type"));
-    const data = await res.blob().text();
-    console.log("Get fragment data", { data });
-    return data;
+    //return blob
+    return await res.blob();
   } catch (err) {
     console.error("Unable to call GET /v1/fragment/:id", { err });
   }
@@ -77,11 +74,11 @@ export async function createFragment(user, fragmentData, contentType) {
   }
 }
 
-export async function updateFragment(user, fragmentData, contentType) {
+export async function updateFragment(user, id, fragmentData, contentType) {
   console.log("Start updating fragment");
   console.log("data", fragmentData);
   try {
-    const res = await fetch(`${apiUrl}/v1/fragments/${fragmentData.id}`, {
+    const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
       method: "PUT",
       headers: {
         // Include the user's ID Token in the request so we're authorized
