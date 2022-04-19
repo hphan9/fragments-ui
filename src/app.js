@@ -23,13 +23,14 @@ async function showData(user, id) {
     console.log(type);
     if (
       /text\/plain/.test(type) ||
-      /text\/markdown/.test(type) ||
-      /\*\/json*/.test(type)
+      /text\/markdown/.test(type)||
+      type== "application/json"
     ) {
       let textData = await data.text();
       paragraph.innerHTML = textData;
       return paragraph;
-    } else if (/text\/html/.test(type)) {
+    }
+     else if (/text\/html/.test(type)) {
       const textData = await data.text();
       const div = document.createElement("div");
       div.innerHTML = textData;
